@@ -48,5 +48,13 @@
         ]
       }
     }
-  }
+  },
+  "mounts": [
+    // Custom configuration directory
+    "source=${localEnv:HOME}/develop/home-assistant/config,target=${containerWorkspaceFolder}/config,type=bind",
+    // Custom component
+    //"source=${localEnv:HOME}/develop/home-assistant/component_name,target=${containerWorkspaceFolder}/config/custom_components/component_name,type=bind",
+    //Custom library
+    "source=${localEnv:HOME}/develop/home-assistant/python-overkiz-api,target=${containerWorkspaceFolder}/config/custom_libraries/pyoverkiz,type=bind"
+  ]
 }
