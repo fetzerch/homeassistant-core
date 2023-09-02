@@ -41,6 +41,17 @@ def _select_option_open_closed_pedestrian(
         }[OverkizCommandParam(option)]
     )
 
+def _select_option_open_closed_partial(
+    option: str, execute_command: Callable[..., Awaitable[None]]
+) -> Awaitable[None]:
+    """Change the selected option for Open/Closed/Partial."""
+    return execute_command(
+        {
+            OverkizCommandParam.CLOSED: OverkizCommand.CLOSE,
+            OverkizCommandParam.OPEN: OverkizCommand.OPEN,
+            OverkizCommandParam.PARTIAL: "setPartialPosition",  # FIXME
+        }[OverkizCommandParam(option)]
+    )
 
 def _select_option_memorized_simple_volume(
     option: str, execute_command: Callable[..., Awaitable[None]]
@@ -72,6 +83,18 @@ SELECT_DESCRIPTIONS: list[OverkizSelectDescription] = [
         ],
         select_option=_select_option_open_closed_pedestrian,
         translation_key="open_closed_pedestrian",
+    ),
+    OverkizSelectDescription(
+        key=OverkizState.CORE_OPEN_CLOSED_PARTIAL,
+        name="Position",
+        icon="mdi:content-save-cog",
+        options=[
+            OverkizCommandParam.OPEN,
+            OverkizCommandParam.PARTIAL,
+            OverkizCommandParam.CLOSED,
+        ],
+        select_option=_select_option_open_closed_partial,
+        translation_key="open_closed_partial",
     ),
     OverkizSelectDescription(
         key=OverkizState.IO_MEMORIZED_SIMPLE_VOLUME,
